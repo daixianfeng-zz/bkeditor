@@ -1,0 +1,15 @@
+合并压缩注意事项：
+按照以下优先级进行压缩：
+A:
+core.js, dtd.js, lib
+B:
+config.js, command-config.js
+C:
+error.js, log.js, load.js, utils.js, lang, interface, toolbar.js
+D:
+histroy.js, execCommand.js, event.js, filter.js, plugin.js, ui.js
+/***********以上为核心***********/
+F:
+command, event, filter, plugin, ui
+G可延时：
+部分event, 部分filter, 部分plugin, 部分ui, 部分skin,

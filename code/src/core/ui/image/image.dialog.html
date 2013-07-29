@@ -1,0 +1,71 @@
+<div ui="imagedialog" style="width:580px; height:300px">
+
+<div class="bke-tabs">
+	<a class="bke-tabs-first bke-tabs-selected" name="tab1">单张插入</a>
+	<a name="tab2">批量上传</a>
+</div>
+<div name="tab1">
+<table>
+	<tr>
+		<td width="60">地 址：<span style="color:red">*</span></td>
+		<td width="300">
+		<input type="text" name="url" style="width:280px"/>
+		</td>
+		<td width="180" rowspan="8" align="right" valign="top">
+		<div class="bke-image-preview">图片预览</div>
+		<div class="bke-image-size"></div>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td id="container1">
+		输入图片地址 或 
+		<a id="pickfile" title="上传成功之后，会自动生成地址">上传一张图片</a>
+		 <span></span>
+		</td>
+	</tr>
+	<tr>
+		<td>链 接：</td>
+		<td><input type="text" name="link" style="width:280px"/></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+		<select name="target">
+			<option value="_blank" selected="selected">新窗口打开链接</option>
+			<option value="_top">当前窗口打开链接</option>
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td>描 述：</td>
+		<td><input type="text" name="title" style="width:280px"/></td>
+	</tr>
+	<tr>
+		<td>宽 度：</td>
+		<td><input type="text" name="width"/> px</td>
+	</tr>
+	<tr>
+		<td>高 度：</td>
+		<td><input type="text" name="height"/> px</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>对 齐：</td>
+		<td><select name="align">
+			<option value="left" selected="selected">图片局左</option>
+			<option value="center">图片居中</option>
+			<option value="right">图片局右</option>
+			</select>
+		</td>
+	</tr>
+</table>
+</div>
+<div name="tab2" style="display:none; ">
+	<div id="container2" style="line-height:25px;">
+		<a id="pickfiles">选择图片</a>
+		<span></span>
+	</div>
+	<div id="filelist" class="bke-image-filelist"></div>
+</div>
+</div>
