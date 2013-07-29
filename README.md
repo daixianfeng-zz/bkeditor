@@ -21,25 +21,42 @@ __*bkeditor —— target:一个很像word的web在线编辑器 !*__
 
 ## Getting Started
 
-下载
++	下载
+
+必须下载的库文件libs文件夹和皮肤文件skin文件夹，如果需要面向ie用户要下载ie文件夹
+>jquery和artDialog如在网页其他地方使用可以不用下载  
+>其他库文件(libs文件夹)，皮肤文件（skin文件夹），ie兼容文件（ie文件夹）必须放在主js文件目录下
 
 完整版
-异步版
+>bke目录下的bkeditor.min.js文件
 
-先引入JS文件 
+异步版
+>bke目录下的其他所有文件
+
+开发完整版
+>dist目录下的bkeditor.js，bkeditor.ext.js文件
+
+开发异步版
+>dist目录下的所有文件
+
++	先引入JS文件 
 
 完整版
-	<script type="text/javascript" src="./js/bkeditor.min.js"></script>
+	
+	<script type="text/javascript" src="./**/bkeditor.min.js"></script>
 异步版
-	<script type="text/javascript" src="./js/bkeditor.js"></script>
+	
+	<script type="text/javascript" src="./**/bkeditor.js"></script>
 
-再new 一个editor实例 .
++	再new 一个editor实例 .
+
+js代码生成
 
 	editor = $.editor({
 		id : 'editor',
 		position : $('#e')
 	});
-
+	
 > id 为唯一标识,当一个页面上有多个编辑器时,id不能重复.
 > position 为绑定在哪个结节元素上.为jquery选择器 ,一般为#id
 
