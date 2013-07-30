@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-29
+/*! Bkeditor - v0.9.0 - 2013-07-30
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(e,t){var n={html:"HTML/XML",js:"Javascript",css:"CSS",php:"PHP",java:"Java",py:"Python",pl:"Perl",rb:"Ruby",cs:"C#",c:"C++/C",vb:"VB/ASP"},r='<div><select name="code_language" style="margin:2px 0;">';for(var i in n)r+='<option value="'+i+'">'+n[i]+"</option>";r+="</select></div>",r+='<textarea name="content" style="width:600px;height:300px;resize:none;"></textarea>',e.addUi({id:"codedialog",html:r,submit:function(){var n=t("#codedialog"),r=n.find("select[name=code_language]").val(),i=n.find("textarea").val();return i=e.utils.escape(i),'\n<pre class="prettyprint lang-'+r+'">'+i+"</pre>\n"}}),e.addPlugin({id:"highlightcode",title:"插入代码",ui:"codedialog",type:"dialog",getData:function(e){var n=e.getCursorElement(),r=t(n).closest("pre").text(),i={content:r};return i}})})(jQuery.jQEditor,jQuery);

@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-29
+/*! Bkeditor - v0.9.0 - 2013-07-30
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function($){
@@ -115,7 +115,7 @@ var jQEditor = {
 		}
 		//添加编辑区域iframe
 		var iframe = document.createElement('iframe');
-		$(iframe).attr({
+		$(iframe).height(conf.editHeight).attr({
 			frameBorder: 0,
 			tabIndex: '0',
 			'width': '100%',
@@ -658,6 +658,7 @@ jQEditor.ready(function(){
 	};
 	
 	var config = {
+		version : '0.9.0',
 		rootDir : rootDir,
 		
 		// 基础配置
@@ -6327,16 +6328,25 @@ E.addFilter({
 function Toolbar(editor) {
 	if ( editor ) {
 		editor.$toolbar = $('#'+editor.Eid+' .bke-toolbar');
+		if(editor.$toolbar.length === 0){
+			editor.$toolbar = $('[ref='+editor.Eid+'] .bke-toolbar');
+		}
 	}
 }
 
 Toolbar.prototype = {
 	isShow : function(cmd){
 		var target = $('#'+E.curId+' [cmd='+cmd+']');
+		if(target.length === 0){
+			target = $('[ref='+E.curId+'] .bke-toolbar  [cmd='+cmd+']');
+		}
 		return target.closest('.bke-btn').hasClass('bke-checked');
 	},
 	openPanel : function(cmd){
 		var target = $('#'+E.curId+' [cmd='+cmd+']');
+		if(target.length === 0){
+			target = $('[ref='+E.curId+'] .bke-toolbar [cmd='+cmd+']');
+		}
 		var btn = target.closest('.bke-btn');
 		var submenu = btn.find('.bke-submenu');
 		if( submenu.length ){
@@ -6345,6 +6355,9 @@ Toolbar.prototype = {
 	},
 	closePanel : function(cmd){
 		var target = $('#'+E.curId+' [cmd='+cmd+']');
+		if(target.length === 0){
+			target = $('[ref='+E.curId+'] .bke-toolbar [cmd='+cmd+']');
+		}
 		var btn = target.closest('.bke-btn');
 		var submenu = btn.find('.bke-submenu');
 		if( submenu.length ){

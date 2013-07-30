@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-29
+/*! Bkeditor - v0.9.0 - 2013-07-30
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(E, $){

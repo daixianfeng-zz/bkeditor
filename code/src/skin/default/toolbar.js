@@ -2,16 +2,25 @@
 function Toolbar(editor) {
 	if ( editor ) {
 		editor.$toolbar = $('#'+editor.Eid+' .bke-toolbar');
+		if(editor.$toolbar.length === 0){
+			editor.$toolbar = $('[ref='+editor.Eid+'] .bke-toolbar');
+		}
 	}
 }
 
 Toolbar.prototype = {
 	isShow : function(cmd){
 		var target = $('#'+E.curId+' [cmd='+cmd+']');
+		if(target.length === 0){
+			target = $('[ref='+E.curId+'] .bke-toolbar  [cmd='+cmd+']');
+		}
 		return target.closest('.bke-btn').hasClass('bke-checked');
 	},
 	openPanel : function(cmd){
 		var target = $('#'+E.curId+' [cmd='+cmd+']');
+		if(target.length === 0){
+			target = $('[ref='+E.curId+'] .bke-toolbar [cmd='+cmd+']');
+		}
 		var btn = target.closest('.bke-btn');
 		var submenu = btn.find('.bke-submenu');
 		if( submenu.length ){
@@ -20,6 +29,9 @@ Toolbar.prototype = {
 	},
 	closePanel : function(cmd){
 		var target = $('#'+E.curId+' [cmd='+cmd+']');
+		if(target.length === 0){
+			target = $('[ref='+E.curId+'] .bke-toolbar [cmd='+cmd+']');
+		}
 		var btn = target.closest('.bke-btn');
 		var submenu = btn.find('.bke-submenu');
 		if( submenu.length ){

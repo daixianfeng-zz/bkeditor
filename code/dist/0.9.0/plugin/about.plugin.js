@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-29
+/*! Bkeditor - v0.9.0 - 2013-07-30
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(E, $){
@@ -6,7 +6,7 @@
 	E.addUi({
 		id: 'aboutdialog',
 		
-		html: '<p><strong style="color:blue;">version</strong> : '+'0.7.0'+'</p>'+
+		html: '<p><strong style="color:blue;">version</strong> : '+E.config.version+'</p>'+
 				'<p style="text-indent:2em;">编辑器正处于开发阶段，欢迎各种意见及建议</p>'+
 				'<p><strong style="color:blue;">快捷键</strong></p>'+
 				'<p style="text-indent:2em;">1,	ctrl+a : 全选</p>'+

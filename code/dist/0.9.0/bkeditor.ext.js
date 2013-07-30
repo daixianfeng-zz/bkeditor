@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-29
+/*! Bkeditor - v0.9.0 - 2013-07-30
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(E){
@@ -373,7 +373,10 @@ $(window).scroll(function(){
 			fixedToolbar(editor);
 		} else {
 			var option = editor.config
-				, toolbar = $('#'+editor.Eid).find('.bke-toolbar')
+				, toolbar = $('#'+editor.Eid).find('.bke-toolbar');
+			if(toolbar.length === 0){
+				toolbar = $('[ref='+editor.Eid+'] .bke-toolbar');
+			}
 
 			toolbar.removeClass( option.fixedClassName );
 		}
@@ -387,6 +390,9 @@ function setToolbarTop(){
 	function f( editor ) {
 		var option = editor.config,
 			toolbar = $('#'+editor.Eid).find('.bke-toolbar');
+		if(toolbar.length === 0){
+			toolbar = $('[ref='+editor.Eid+'] .bke-toolbar');
+		}
 			
 		if( toolbar.size() ){
 			option.toolbarTop = toolbar.offset().top ? toolbar.offset().top : option.toolbarTop;
@@ -424,7 +430,7 @@ function autoHeight( editor ){
 	tmpDiv.style.display = "block";
 	dom.body.appendChild(tmpDiv);
 	
-	height = Math.max(tmpDiv.offsetTop + 20, editor.config.height);
+	height = Math.max(tmpDiv.offsetTop + 20, parseInt(editor.config.editHeight,10));
 	dom.body.removeChild(tmpDiv);
 	
 	var o = $('#'+editor.Eid);
@@ -443,6 +449,9 @@ function fixedToolbar( editor ){
 		o = $('#'+editor.Eid),
 		toolbar = o.find('.bke-toolbar'),
 		maxScroll = 0;
+	if(toolbar.length === 0){
+		toolbar = $('[ref='+editor.Eid+'] .bke-toolbar');
+	}
 	
 	if( !toolbar.size() || !option.autoHeight ){
 		return;

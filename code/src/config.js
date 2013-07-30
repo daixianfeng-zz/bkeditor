@@ -57,6 +57,7 @@
 	};
 	
 	var config = {
+		version : '0.9.0',
 		rootDir : rootDir,
 		
 		// 基础配置

@@ -124,7 +124,7 @@ var jQEditor = {
 		}
 		//添加编辑区域iframe
 		var iframe = document.createElement('iframe');
-		$(iframe).attr({
+		$(iframe).height(conf.editHeight).attr({
 			frameBorder: 0,
 			tabIndex: '0',
 			'width': '100%',

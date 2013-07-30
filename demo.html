@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+	<link id="artDialog-skin" href="./code/bke/0.9.0/libs/artdialog/skins/default.css" rel="stylesheet" />
+    <title>BKEditor</title>
+  </head>
+
+  <body>
+	
+	<script type="text/javascript" src="./code/bke/0.9.0/libs/jquery/jquery.js"></script>
+	<script type="text/javascript" src="./code/bke/0.9.0/libs/artdialog/artdialog.js"></script>
+	<script type="text/javascript" src="./code/bke/0.9.0/bkeditor.min.js"></script>
+
+	<h3><a style="color:red;" href="./demo.html">完整版</a></h3>
+	<h3><a href="./demo_async.html">异步版</a></h3>
+	<div>
+		<textarea id="ed_title" class="bkeditor" data-toolbar="base" style="width:800px;height:100px;">Here is the Title</textarea>
+		<hr />
+		<div id="ed_toolbar"></div>
+		<hr />
+		<textarea id="ed_contents">Here is the Contents</textarea>
+	</div>
+
+   
+  </body>
+  <script type="text/javascript">
+	$(document).ready(function(){
+		$.editor({
+			id : 'content',
+			position : {toolbar:$('#ed_toolbar'),content:$('#ed_contents')},
+			oriHtml : $('#ed_contents').val(),
+			toolbar: 'default',
+			editWidth : '800px',
+			height:'auto',
+			editHeight : '600px'
+		});
+	});
+	
+  </script>
+</html>

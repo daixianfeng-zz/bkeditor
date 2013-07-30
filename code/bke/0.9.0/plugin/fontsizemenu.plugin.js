@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-29
+/*! Bkeditor - v0.9.0 - 2013-07-30
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(e){var t=[{name:"12px",cmd:"fontsize",param:"12px",styleName:"bke-font12"},{name:"14px",cmd:"fontsize",param:"14px",styleName:"bke-font14"},{name:"18px",cmd:"fontsize",param:"18px",styleName:"bke-font18"},{name:"24px",cmd:"fontsize",param:"24px",styleName:"bke-font24"},{name:"36px",cmd:"fontsize",param:"36px",styleName:"bke-font36"}];e.addPlugin({id:"fontsizemenu",type:"panel",isEnable:!0,fill:function(){var n=e.Menu.create(t);e.fillPanel("fontsizemenu",n)},echo:function(e,t){e.find("#icon-fontsizemenu").find(".bke-FontSize a").html(t)}})})(window.jQuery.jQEditor);

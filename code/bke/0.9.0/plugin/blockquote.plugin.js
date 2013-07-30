@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-29
+/*! Bkeditor - v0.9.0 - 2013-07-30
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(e,t){e.addPlugin({id:"blockquote",title:"引用",click:function(){var n=e.curEditor,i=e.utils.getSelectionRange(n.win,"node"),r=null,o=null,a=null;r=t(i.startContainer).parents().get(),r.pop(),r.pop(),o=r.pop(),r=t(i.endContainer).parents().get(),r.pop(),r.pop(),a=r.pop();var s=t(o);if(o===a)s.is("blockquote")?s.after(s.children()).remove():s.wrap("<blockquote></blockquote>");else{var l=n.dom.createElement("blockquote");s.before(l),s.nextAll().each(function(){return t(l).append(this),a===this?!1:void 0}),t(l).prepend(o)}e.utils.setSelectionRange(n.win,i,"node")}})})(jQuery.jQEditor,jQuery);
