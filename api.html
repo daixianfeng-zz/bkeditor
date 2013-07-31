@@ -7,12 +7,12 @@
 	<link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print"/>
-	<link id="artDialog-skin" href="./code/bke/0.9.0/libs/artdialog/skins/default.css" rel="stylesheet" />
+
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<title>BKEditor - Demo</title>
+	<title>BKEditor - Api</title>
 </head>
 
 <body>
@@ -37,28 +37,29 @@
 	<div class="inner clearfix">
 		<section id="main-content">
 			<h2>
-				<a name="demo" class="anchor" href="#demo"><span
-					class="octicon octicon-link">完整版</span></a></h2>
-			<div class="demo-area">
-				<h3>标题编辑器</h3>
-				<div style="margin:10px 0 10px 0;">
-					<textarea id="ed_title" class="bkeditor" data-toolbar="base" style="width:650px;height:100px;">Here is the Title</textarea>
-				</div>
-				<h3>内容编辑器</h3>
-				<div style="margin:10px 0 10px 0;">
-					<div id="ed_toolbar"></div>
-					<textarea id="ed_contents">Here is the Contents</textarea>
-				</div>
-			</div>
-			<h2>
-				<a name="demo-more" class="anchor" href="#demo-more"><span
-					class="octicon octicon-link">分类演示</span></a></h2>
-			<div class="demo-more">
-				<a href="">完整版</a>
-				<a href="">异步版</a>
-				<a href="">插件配置</a>
-				<a href="">事件配置</a>
-				<a href="">过滤配置</a>
+				<a name="api" class="anchor" href="#api"><span
+					class="octicon octicon-link">Api</span></a></h2>
+			<div class="api-list">
+				<dl>
+					<dt>-- 编辑器核心</dt>
+					<dd><a href="">ready</a></dd>
+				</dl>
+				<dl>
+					<dt>-- 编辑器实例</dt>
+					<dd><a href="">ready</a></dd>
+				</dl>
+				<dl>
+					<dt>-- 事件</dt>
+					<dd></dd>
+				</dl>	
+				<dl>
+					<dt>-- 过滤器</dt>
+					<dd></dd>
+				</dl>	
+				<dl>
+					<dt>-- 插件</dt>
+					<dd></dd>
+				</dl>
 			</div>
 		</section>
 
@@ -82,21 +83,5 @@
 </div>
 <script type="text/javascript" src="./javascripts/jquery.js"></script>
 <script type="text/javascript" src="./javascripts/main.js"></script>
-<script type="text/javascript" src="./code/bke/0.9.0/libs/artdialog/artdialog.js"></script>
-<script type="text/javascript" src="./code/bke/0.9.0/bkeditor.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$.editor({
-			id : 'content',
-			position : {toolbar:$('#ed_toolbar'),content:$('#ed_contents')},
-			oriHtml : $('#ed_contents').val(),
-			toolbar: 'default',
-			editWidth : '650px',
-			height:'auto',
-			editHeight : '600px'
-		});
-	});
-	
-  </script>
 </body>
 </html>
