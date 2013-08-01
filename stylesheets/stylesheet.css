@@ -179,29 +179,24 @@ table#back-feature {
 ul.version-list {
 	
 }
-
 ul.version-list li {
 	list-style : none;
 	clear : both;
 }
-
 ul.version-list li p.version-name {
 	float : left;
 	font-weight : bold;
 	margin : 0 0 10px 10px;
 }
-
 ul.version-list li p.version-opt {
 	float : right;
 	margin : 0 10px 10px 0;
 }
-
 ul.version-list li p.clear {
 	clear : both;
 	margin : 0;
 	height : 0;
 }
-
 ul.version-list li div.version-info {
 	display : none;
 	margin : 5px 30px 20px 15px;
@@ -210,11 +205,9 @@ ul.version-list li div.version-info {
 	box-shadow : 10px 10px 5px #E2E2E2;
 	padding : 5px;
 }
-
 ul.version-list li div.version-info.show {
 	display : block;
 }
-
 ul.version-list li p.version-opt a {
 	margin-right : 10px;
 }
@@ -222,13 +215,11 @@ ul.version-list li p.version-opt a {
 div.docs-list, div.api-list {
 
 }
-
 div.docs-list dl, div.api-list dl {
 	background-color : #F6F6F6;
 	font-size : 20px;
 	border-radius : 10px;
 }
-
 div.docs-list dl dt, div.api-list dl dt{
 	margin : 5px 0 5px 0;
 	background-color : #F2F2F2;
@@ -236,7 +227,6 @@ div.docs-list dl dt, div.api-list dl dt{
 	text-indent : 1em;
 	border-radius : 10px;
 }
-
 div.docs-list dl dd, div.api-list dl dd{
 	margin : 5px 0 5px 0;
 	background-color : #F2F2F2;
@@ -478,14 +468,18 @@ dl dd {
 }
 
 footer {
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
+  background: transparent url('../images/hr.png') 50% 0 no-repeat;
   margin-top: 40px;
   padding-top: 20px;
   padding-bottom: 30px;
   font-size: 13px;
   color: #aaa;
+  width: 940px;
+  margin : 30px auto 0 auto;
 }
-
+footer p {
+  text-align : center;
+}
 footer a {
   color: #666;
 }
