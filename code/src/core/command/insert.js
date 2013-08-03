@@ -59,7 +59,7 @@
 			this.document = dom;
 			this.mainRange = dom.createRange();
 			this.mainSelection = win.getSelection();
-			if(this.mainSelection.type === 'None'){
+			if(this.mainSelection.rangeCount === 0 || this.mainSelection.type === 'None'){
                 this.mainSelection.addRange(this.mainRange);
             }else{
                 this.mainRange = this.mainSelection.getRangeAt(0);

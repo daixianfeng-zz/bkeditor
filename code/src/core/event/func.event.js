@@ -81,7 +81,8 @@
 				});
 				$cells.bind('mouseenter',function(e2){
 					$cells.removeClass(selectCellClass);
-					if(E.curEditor.win.getSelection().type === 'None'){
+					var curSel = E.curEditor.win.getSelection();
+					if(curSel.rangeCount === 0 || curSel.type === 'None'){
 						/*当拖动时移出编辑器内容区时，会产生编辑器内容区域无选中区*/
 						$cells.unbind('mouseenter mousemove.selectCell');
 					}else{

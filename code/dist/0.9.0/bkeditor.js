@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-30
+/*! Bkeditor - v0.9.0 - 2013-08-03
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function($){
@@ -7,6 +7,7 @@
 var jQEditor = {
 	IE: window.VBArray ? true : false,
 	IE6: (window.VBArray && !window.XMLHttpRequest) ? true : false,
+	FF:	(navigator.userAgent.indexOf("Firefox")!==-1),
 	
 	// 编辑器状态
 	state : 'loading',
@@ -286,16 +287,14 @@ var jQEditor = {
 		}
 	},
 	getLang:function (path) {
-		var lang = this.lang;
+		var lang = {};
+		lang = this.lang;
 		path = (path || "").split( "." );
 		for ( var i = 0, ci; ci = path[i++]; ) {
 			lang = lang[ci];
 			if ( !lang ){
 				break;
 			}
-		}
-		if (lang === undefined && $.browser.mozilla ){
-			console.log (path[path.length-1]);
 		}
 		return lang === undefined ? path[path.length-1]: lang ;
 	},
@@ -372,6 +371,7 @@ var editor = function(options){
 function Editor(options){
 	var self = this;
 	this.state = 'init';
+	this.enable = true;
 	options.id = options.id ? options.id : 'bkeditor_'+(new Date()).getTime();
 	this.Eid = options.id;
 	jQEditor.editorList[this.Eid] = this;
@@ -479,15 +479,23 @@ Editor.prototype = {
 		this.dom.body.innerHTML = html;
 		this.baseFilter.excute('dom');
 	},
-
+	
+	// 获取纯文本内容
+	getTextContent: function() {
+		var textContent = jQEditor.FF ? this.dom.body.textContent : this.dom.body.innerText;
+		return textContent;
+	},
+	
 	// 激活编辑器
 	enable: function(){
-
+		this.enable = true;
+		this.dom.body.contentEditable = true;
 	},
 
 	// 禁用编辑器
 	disable: function(){
-
+		this.enable = false;
+		this.dom.body.contentEditable = false;
 	},
 
 	// 执行命令
@@ -588,14 +596,20 @@ jQEditor.ready(function(){
 		var o = $(el)
 			, timestamp = (new Date()).getTime()
 		var preId = o.attr('id') ? o.attr('id')+'_' : 'bkeditor_';
-		var newEditor = editor({
+		var confObj = {
 			id : preId+timestamp,
-			toolbar : o.data('toolbar'),
 			position : o,
 			editWidth : o.css('width'),
 			editHeight : o.css('height'),
 			oriHtml : o.val()
-		});
+		}
+		if(o.data('toolbar')){
+			confObj.toolbar = o.data('toolbar');
+		}
+		if(o.data('skin')){
+			confObj.skin = o.data('skin');
+		}
+		var newEditor = editor(confObj);
 		
 		// 将编辑器实例挂到元素对象上
 		o.data('editor', newEditor);
@@ -1481,7 +1495,10 @@ var DTD = (function() {
 			try{
 				var elementList = [];
 				var curSelect = E.curEditor.win.getSelection();
-				if(curSelect.type === 'None'){
+				if(!curSelect){
+					return [E.curEditor.dom.body];
+				}
+				if(curSelect.rangeCount === 0 || curSelect.type === 'None'){
 					var selRange = E.curEditor.dom.createRange();
 					selRange.selectNodeContents(E.curEditor.dom.body);
 					selRange.collapse(false);
@@ -1532,7 +1549,7 @@ var DTD = (function() {
 				var offsetList = {start:[],end:[]};
 				win.focus();
 				var curSelect = win.getSelection();
-				if(curSelect.type === 'None'){
+				if(curSelect.rangeCount === 0 || curSelect.type === 'None'){
 					var selRange = win.document.createRange();
 					selRange.selectNodeContents(win.document.body);
 					selRange.collapse(false);
@@ -1631,7 +1648,7 @@ var DTD = (function() {
 					}
 				}
 				var curSelect = win.getSelection();
-				if(curSelect.type !== 'None'){
+				if(curSelect.rangeCount !== 0 || curSelect.type !== 'None'){
 					curSelect.removeAllRanges();
 				}
 				var selRange = dom.createRange();
@@ -1842,7 +1859,7 @@ var DTD = (function() {
 		getSelectionRange :function (win,depend) {
 			try{
 				var curSelection = win.getSelection(),selRange = {};
-				if(curSelection.type !== 'None'){
+				if(curSelect.rangeCount !== 0 || curSelection.type !== 'None'){
 					selRange = curSelection.getRangeAt(0);
 				}else{
 					var newRange = win.document.createRange();
@@ -1960,7 +1977,7 @@ var DTD = (function() {
 		replaceSelectedText : function(win,newText){
 			try{
 				var curSelection = win.getSelection(),selRange = {};
-				if(curSelection.type !== 'None'){
+				if(curSelect.rangeCount !== 0 || curSelection.type !== 'None'){
 					selRange = curSelection.getRangeAt(0);
 					if(selRange.startContainer.nodeType === 3 && selRange.startContainer === selRange.endContainer){
 						var textParent = selRange.startContainer.parentNode;
@@ -2537,6 +2554,10 @@ var DTD = (function() {
 		* @param {object} args uiCommand对应方法对象的参数
 		**/
 		excuteCommand : function(pcmd,pvalue,args){
+			if(E.curEditor.enable === false){
+				E.errorMessage('编辑器已禁用');
+				return false;
+			}
 			var self = this;
 			this.beforeCommand(pcmd);
 			var commandType = '';
@@ -2651,7 +2672,7 @@ var DTD = (function() {
 			this.document = dom;
 			this.mainRange = dom.createRange();
 			this.mainSelection = win.getSelection();
-			if(this.mainSelection.type === 'None'){
+			if(this.mainSelection.rangeCount === 0 || this.mainSelection.type === 'None'){
                 this.mainSelection.addRange(this.mainRange);
             }else{
                 this.mainRange = this.mainSelection.getRangeAt(0);
@@ -2889,7 +2910,7 @@ var DTD = (function() {
 					rangeObj.rangeSet[i] = mainRange.cloneRange();
 				}
 			}else{
-				if(this.mainSelection.type === 'None'){
+				if(this.mainSelection.rangeCount === 0 || this.mainSelection.type === 'None'){
 					rangeObj.len = 0;
 				}else{
 					rangeObj.len = 1;
@@ -3229,7 +3250,7 @@ var DTD = (function() {
 					rangeObj.rangeSet[i] = mainRange.cloneRange();
 				}
 			}else{
-				if(this.mainSelection.type === 'None'){
+				if(this.mainSelection.rangeCount === 0 || this.mainSelection.type === 'None'){
 					rangeObj.len = 0;
 				}else{
 					rangeObj.len = 1;
@@ -3328,22 +3349,29 @@ var DTD = (function() {
 							comRange2.selectNode(queryNode2);
 							var	inEnd = comRange2.compareBoundaryPoints(comRange2.START_TO_START,comEndRange);
 						}else{
-							var	inEnd = -1;
+							var	inEnd = 1;
 						}
 					}
 					var startCome = inStart > -1 && startOpt === 0;
+
 					var	endCome = inEnd > -1 && startOpt === 1 && endOpt === 1;
+					if(startOpt === 0 && inEnd > -1){
+						startOpt = 1;
+					}
 					//修改尾部被截断的节点
 					if(queryNode === oriOptArea.lastNode || endCome){
-                        if(changeType === 'style'){
-                            endRange = this._addSpan(queryNode,oriOptArea,styleType,styleValue,'last');
-                        }else if(changeType === 'wordcase'){
-	                        endRange = this._wordCase(queryNode,oriOptArea,styleType,styleValue,'last');
-                        }else if(changeType === 'tag_on'){
-                            endRange = this._addTag(queryNode,oriOptArea,styleType,'last','on');
-                        }else{
-							endRange = this._addTag(queryNode,oriOptArea,styleType,'last','off');
+                        if(!endCome){
+							if(changeType === 'style'){
+								endRange = this._addSpan(queryNode,oriOptArea,styleType,styleValue,'last');
+							}else if(changeType === 'wordcase'){
+								endRange = this._wordCase(queryNode,oriOptArea,styleType,styleValue,'last');
+							}else if(changeType === 'tag_on'){
+								endRange = this._addTag(queryNode,oriOptArea,styleType,'last','on');
+							}else{
+								endRange = this._addTag(queryNode,oriOptArea,styleType,'last','off');
+							}
 						}
+						
 						if(!endRange){
 							endRange = tmpEndRange;
 						}else{
@@ -3378,16 +3406,19 @@ var DTD = (function() {
 					}
 					//修改头部被截断的节点
 					if( !startOpt && (queryNode === oriOptArea.firstNode || startCome) ){
-                        if(changeType === 'style'){
-                            startRange = this._addSpan(queryNode,oriOptArea,styleType,styleValue,'first');
-						}else if(changeType === 'wordcase'){
-	                        startRange = this._wordCase(queryNode,oriOptArea,styleType,styleValue,'first');
-                        }else if(changeType === 'tag_on'){
-                            startRange = this._addTag(queryNode,oriOptArea,styleType,'first','on');
-                        }else{
-							startRange = this._addTag(queryNode,oriOptArea,styleType,'first','off');
+						if(!startCome){
+							 if(changeType === 'style'){
+								startRange = this._addSpan(queryNode,oriOptArea,styleType,styleValue,'first');
+							}else if(changeType === 'wordcase'){
+								startRange = this._wordCase(queryNode,oriOptArea,styleType,styleValue,'first');
+							}else if(changeType === 'tag_on'){
+								startRange = this._addTag(queryNode,oriOptArea,styleType,'first','on');
+							}else{
+								startRange = this._addTag(queryNode,oriOptArea,styleType,'first','off');
+							}
 						}
                         startOpt = 1;
+						tmpEndRange = startRange;
 						if(startRange && queryNode.nodeType !== 3){
 							startEmpty = 1;
 						}
@@ -4011,18 +4042,6 @@ var DTD = (function() {
 		delegate : function(){
 
 		}
-		/*
-		listenEditarea : function(curEditor,targetDom){
-			this._listenEditClick(curEditor,targetDom);
-		},
-		_listenEditClick : function(curEditor,targetDom){
-			var targetEditor = curEditor;
-			$('body',targetDom).live('click',function(e){
-				var tar = $(e.target);
-				targetEditor.execCommand.excuteCommand('element','click');
-				return false;
-			});
-		}*/
 	};
 
 	var coreEvent = new Event(E.config);
@@ -6192,7 +6211,8 @@ function cleanWord(html){
 				queryNode = queryNode2;
 				continue;
 			}
-			if(queryNode.children.length == 0 && queryNode.innerText.length === 0 && queryNode !== selNode && DTD.$block[queryNode.nodeName] !== 1 && queryNode.nodeName !== 'BODY'){
+			var nodeText = E.FF ? queryNode.textContent : queryNode.innerText;
+			if(queryNode.children.length == 0 && nodeText.length === 0 && queryNode !== selNode && DTD.$block[queryNode.nodeName] !== 1 && queryNode.nodeName !== 'BODY'){
 				var cutRange = dom.createRange();
 				cutRange.selectNode(queryNode);
 				//如果范围节点在queryNode上，需要移动，并且重置选择范围

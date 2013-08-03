@@ -21,6 +21,11 @@ E.addEvent({
 		}
 		
 		$path.html('元素路径：'+html.join('&gt;'));
+		//附加统计文字数
+		var stat = $('#'+E.curId+' .bke-wordcount');
+		var textContent = E.curEditor.getTextContent();
+		textContent = textContent ? textContent.replace(/\s/g,'') : '';
+		stat.html('字数统计:'+textContent.length);
 	}
 });
 

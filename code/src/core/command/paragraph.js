@@ -82,7 +82,7 @@
 					rangeObj.rangeSet[i] = mainRange.cloneRange();
 				}
 			}else{
-				if(this.mainSelection.type === 'None'){
+				if(this.mainSelection.rangeCount === 0 || this.mainSelection.type === 'None'){
 					rangeObj.len = 0;
 				}else{
 					rangeObj.len = 1;

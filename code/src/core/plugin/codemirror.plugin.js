@@ -28,9 +28,10 @@ E.addPlugin({
 			if ( isShowSource ) {
 				// 显示编辑状态，将源码内容写道iframe当中
 				content = codeEditor.getValue();
-				editor.setContent(content);
 				$(".CodeMirror").remove();
-				$("#"+editor.Eid+" iframe").show();
+				$("#"+editor.Eid+" iframe").show(0,function(){
+					editor.setContent(content);
+				});
 				isShowSource = false;
 				this.clicked(false);
 				if(selOffset){

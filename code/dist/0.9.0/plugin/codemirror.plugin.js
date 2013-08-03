@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-30
+/*! Bkeditor - v0.9.0 - 2013-08-03
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(E, $){
@@ -26,9 +26,10 @@ E.addPlugin({
 			if ( isShowSource ) {
 				// 显示编辑状态，将源码内容写道iframe当中
 				content = codeEditor.getValue();
-				editor.setContent(content);
 				$(".CodeMirror").remove();
-				$("#"+editor.Eid+" iframe").show();
+				$("#"+editor.Eid+" iframe").show(0,function(){
+					editor.setContent(content);
+				});
 				isShowSource = false;
 				this.clicked(false);
 				if(selOffset){

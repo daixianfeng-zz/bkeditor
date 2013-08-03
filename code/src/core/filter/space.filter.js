@@ -67,7 +67,8 @@
 				queryNode = queryNode2;
 				continue;
 			}
-			if(queryNode.children.length == 0 && queryNode.innerText.length === 0 && queryNode !== selNode && DTD.$block[queryNode.nodeName] !== 1 && queryNode.nodeName !== 'BODY'){
+			var nodeText = E.FF ? queryNode.textContent : queryNode.innerText;
+			if(queryNode.children.length == 0 && nodeText.length === 0 && queryNode !== selNode && DTD.$block[queryNode.nodeName] !== 1 && queryNode.nodeName !== 'BODY'){
 				var cutRange = dom.createRange();
 				cutRange.selectNode(queryNode);
 				//如果范围节点在queryNode上，需要移动，并且重置选择范围

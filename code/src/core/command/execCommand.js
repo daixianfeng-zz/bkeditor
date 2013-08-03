@@ -61,6 +61,10 @@
 		* @param {object} args uiCommand对应方法对象的参数
 		**/
 		excuteCommand : function(pcmd,pvalue,args){
+			if(E.curEditor.enable === false){
+				E.errorMessage('编辑器已禁用');
+				return false;
+			}
 			var self = this;
 			this.beforeCommand(pcmd);
 			var commandType = '';

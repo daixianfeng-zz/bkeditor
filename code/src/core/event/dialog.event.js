@@ -13,7 +13,7 @@
 	* @description
 	* 委托点击事件，带有cmd属性的，将会执行编辑器命令
 	**/
-	$('.bke-dialog').live('click',function(e){
+	$(document).delegate('.bke-dialog','click',function(e){
 		var tar = $(e.target);
 		var cmd = tar.attr('cmd');
 		var param = tar.attr('param');

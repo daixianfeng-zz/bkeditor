@@ -128,18 +128,6 @@
 		delegate : function(){
 
 		}
-		/*
-		listenEditarea : function(curEditor,targetDom){
-			this._listenEditClick(curEditor,targetDom);
-		},
-		_listenEditClick : function(curEditor,targetDom){
-			var targetEditor = curEditor;
-			$('body',targetDom).live('click',function(e){
-				var tar = $(e.target);
-				targetEditor.execCommand.excuteCommand('element','click');
-				return false;
-			});
-		}*/
 	};
 
 	var coreEvent = new Event(E.config);

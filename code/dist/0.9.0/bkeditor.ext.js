@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-30
+/*! Bkeditor - v0.9.0 - 2013-08-03
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(E){
@@ -812,7 +812,7 @@ E.addEvent({
 	* @description
 	* 委托点击事件，带有cmd属性的，将会执行编辑器命令
 	**/
-	$('.bke-dialog').live('click',function(e){
+	$(document).delegate('.bke-dialog','click',function(e){
 		var tar = $(e.target);
 		var cmd = tar.attr('cmd');
 		var param = tar.attr('param');
@@ -1165,7 +1165,8 @@ E.addEvent({
 				});
 				$cells.bind('mouseenter',function(e2){
 					$cells.removeClass(selectCellClass);
-					if(E.curEditor.win.getSelection().type === 'None'){
+					var curSel = E.curEditor.win.getSelection();
+					if(curSel.rangeCount === 0 || curSel.type === 'None'){
 						/*当拖动时移出编辑器内容区时，会产生编辑器内容区域无选中区*/
 						$cells.unbind('mouseenter mousemove.selectCell');
 					}else{
@@ -1591,6 +1592,11 @@ E.addEvent({
 		}
 		
 		$path.html('元素路径：'+html.join('&gt;'));
+		//附加统计文字数
+		var stat = $('#'+E.curId+' .bke-wordcount');
+		var textContent = E.curEditor.getTextContent();
+		textContent = textContent ? textContent.replace(/\s/g,'') : '';
+		stat.html('字数统计:'+textContent.length);
 	}
 });
 

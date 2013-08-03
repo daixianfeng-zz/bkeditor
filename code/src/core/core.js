@@ -16,6 +16,7 @@
 var jQEditor = {
 	IE: window.VBArray ? true : false,
 	IE6: (window.VBArray && !window.XMLHttpRequest) ? true : false,
+	FF:	(navigator.userAgent.indexOf("Firefox")!==-1),
 	
 	// 编辑器状态
 	state : 'loading',
@@ -295,16 +296,14 @@ var jQEditor = {
 		}
 	},
 	getLang:function (path) {
-		var lang = this.lang;
+		var lang = {};
+		lang = this.lang;
 		path = (path || "").split( "." );
 		for ( var i = 0, ci; ci = path[i++]; ) {
 			lang = lang[ci];
 			if ( !lang ){
 				break;
 			}
-		}
-		if (lang === undefined && $.browser.mozilla ){
-			console.log (path[path.length-1]);
 		}
 		return lang === undefined ? path[path.length-1]: lang ;
 	},
@@ -381,6 +380,7 @@ var editor = function(options){
 function Editor(options){
 	var self = this;
 	this.state = 'init';
+	this.enable = true;
 	options.id = options.id ? options.id : 'bkeditor_'+(new Date()).getTime();
 	this.Eid = options.id;
 	jQEditor.editorList[this.Eid] = this;
@@ -488,15 +488,23 @@ Editor.prototype = {
 		this.dom.body.innerHTML = html;
 		this.baseFilter.excute('dom');
 	},
-
+	
+	// 获取纯文本内容
+	getTextContent: function() {
+		var textContent = jQEditor.FF ? this.dom.body.textContent : this.dom.body.innerText;
+		return textContent;
+	},
+	
 	// 激活编辑器
 	enable: function(){
-
+		this.enable = true;
+		this.dom.body.contentEditable = true;
 	},
 
 	// 禁用编辑器
 	disable: function(){
-
+		this.enable = false;
+		this.dom.body.contentEditable = false;
 	},
 
 	// 执行命令
@@ -597,14 +605,20 @@ jQEditor.ready(function(){
 		var o = $(el)
 			, timestamp = (new Date()).getTime()
 		var preId = o.attr('id') ? o.attr('id')+'_' : 'bkeditor_';
-		var newEditor = editor({
+		var confObj = {
 			id : preId+timestamp,
-			toolbar : o.data('toolbar'),
 			position : o,
 			editWidth : o.css('width'),
 			editHeight : o.css('height'),
 			oriHtml : o.val()
-		});
+		}
+		if(o.data('toolbar')){
+			confObj.toolbar = o.data('toolbar');
+		}
+		if(o.data('skin')){
+			confObj.skin = o.data('skin');
+		}
+		var newEditor = editor(confObj);
 		
 		// 将编辑器实例挂到元素对象上
 		o.data('editor', newEditor);

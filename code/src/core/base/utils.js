@@ -38,7 +38,10 @@
 			try{
 				var elementList = [];
 				var curSelect = E.curEditor.win.getSelection();
-				if(curSelect.type === 'None'){
+				if(!curSelect){
+					return [E.curEditor.dom.body];
+				}
+				if(curSelect.rangeCount === 0 || curSelect.type === 'None'){
 					var selRange = E.curEditor.dom.createRange();
 					selRange.selectNodeContents(E.curEditor.dom.body);
 					selRange.collapse(false);
@@ -89,7 +92,7 @@
 				var offsetList = {start:[],end:[]};
 				win.focus();
 				var curSelect = win.getSelection();
-				if(curSelect.type === 'None'){
+				if(curSelect.rangeCount === 0 || curSelect.type === 'None'){
 					var selRange = win.document.createRange();
 					selRange.selectNodeContents(win.document.body);
 					selRange.collapse(false);
@@ -188,7 +191,7 @@
 					}
 				}
 				var curSelect = win.getSelection();
-				if(curSelect.type !== 'None'){
+				if(curSelect.rangeCount !== 0 || curSelect.type !== 'None'){
 					curSelect.removeAllRanges();
 				}
 				var selRange = dom.createRange();
@@ -399,7 +402,7 @@
 		getSelectionRange :function (win,depend) {
 			try{
 				var curSelection = win.getSelection(),selRange = {};
-				if(curSelection.type !== 'None'){
+				if(curSelect.rangeCount !== 0 || curSelection.type !== 'None'){
 					selRange = curSelection.getRangeAt(0);
 				}else{
 					var newRange = win.document.createRange();
@@ -517,7 +520,7 @@
 		replaceSelectedText : function(win,newText){
 			try{
 				var curSelection = win.getSelection(),selRange = {};
-				if(curSelection.type !== 'None'){
+				if(curSelect.rangeCount !== 0 || curSelection.type !== 'None'){
 					selRange = curSelection.getRangeAt(0);
 					if(selRange.startContainer.nodeType === 3 && selRange.startContainer === selRange.endContainer){
 						var textParent = selRange.startContainer.parentNode;

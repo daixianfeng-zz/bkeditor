@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-30
+/*! Bkeditor - v0.9.0 - 2013-08-03
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(e){e.addUi({id:"videodialog",html:'<table width="300">			<tr>			<td>视频地址：</td>			<td><input type="text" name="url" style="width:200px"/></td>			</tr><tr>			<td>宽：</td>			<td><input type="text" name="width" value="800" style="width:60px"/> px</td>			</tr><tr>			<td>高：</td>			<td><input type="text" name="height" value="600" style="width:60px"/> px</td>			</tr></table>',check:function(){},submit:function(){var t=this.getValues();if(t.url){var n='<embed src="'+t.url+'" quality="high" width="'+t.width+'" height="'+t.height+'" align="middle" allowScriptAccess="sameDomain" allowFullscreen="true" type="application/x-shockwave-flash"></embed>';e.utils.pasteHTML(n)}}}),e.addPlugin({id:"video",title:"视频",ui:"videodialog",type:"dialog",getData:function(){var e={};return e}})})(jQuery.jQEditor,jQuery);

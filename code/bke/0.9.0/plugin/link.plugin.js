@@ -1,4 +1,4 @@
-/*! Bkeditor - v0.9.0 - 2013-07-30
+/*! Bkeditor - v0.9.0 - 2013-08-03
 * https://github.com/daixianfeng/bkeditor
 * Copyright (c) 2013 daixianfeng;*/
 (function(e){e.addUi({id:"linkdialog",html:'<table width="300">		  <tr>			<td>链接文字：</td>			<td><input type="text" name="text" style="width:200px"/></td>		  </tr>		  <tr>			<td>链接地址：</td>			<td><input type="text" name="link" value="http://" style="width:200px"/></td>		  </tr>		  <tr>			<td></td>			<td><select name="target">				<option value="_blank" selected="true">新窗口打开</option>				<option value="_top">当前窗口打开</option>			</select></td>		  </tr>		  </table>',check:function(){},submit:function(){var t=this.getValues();if(t.text){var n='<a href="'+t.link+'" target="'+t.target+'">'+t.text+"</a>";e.utils.pasteHTML(n)}}}),e.addPlugin({id:"link",title:"超链接",ui:"linkdialog",type:"dialog",getData:function(){var t={text:e.utils.getSelectionText()};return t}})})(jQuery.jQEditor,jQuery);

@@ -86,7 +86,7 @@
 					rangeObj.rangeSet[i] = mainRange.cloneRange();
 				}
 			}else{
-				if(this.mainSelection.type === 'None'){
+				if(this.mainSelection.rangeCount === 0 || this.mainSelection.type === 'None'){
 					rangeObj.len = 0;
 				}else{
 					rangeObj.len = 1;
@@ -185,22 +185,29 @@
 							comRange2.selectNode(queryNode2);
 							var	inEnd = comRange2.compareBoundaryPoints(comRange2.START_TO_START,comEndRange);
 						}else{
-							var	inEnd = -1;
+							var	inEnd = 1;
 						}
 					}
 					var startCome = inStart > -1 && startOpt === 0;
+
 					var	endCome = inEnd > -1 && startOpt === 1 && endOpt === 1;
+					if(startOpt === 0 && inEnd > -1){
+						startOpt = 1;
+					}
 					//修改尾部被截断的节点
 					if(queryNode === oriOptArea.lastNode || endCome){
-                        if(changeType === 'style'){
-                            endRange = this._addSpan(queryNode,oriOptArea,styleType,styleValue,'last');
-                        }else if(changeType === 'wordcase'){
-	                        endRange = this._wordCase(queryNode,oriOptArea,styleType,styleValue,'last');
-                        }else if(changeType === 'tag_on'){
-                            endRange = this._addTag(queryNode,oriOptArea,styleType,'last','on');
-                        }else{
-							endRange = this._addTag(queryNode,oriOptArea,styleType,'last','off');
+                        if(!endCome){
+							if(changeType === 'style'){
+								endRange = this._addSpan(queryNode,oriOptArea,styleType,styleValue,'last');
+							}else if(changeType === 'wordcase'){
+								endRange = this._wordCase(queryNode,oriOptArea,styleType,styleValue,'last');
+							}else if(changeType === 'tag_on'){
+								endRange = this._addTag(queryNode,oriOptArea,styleType,'last','on');
+							}else{
+								endRange = this._addTag(queryNode,oriOptArea,styleType,'last','off');
+							}
 						}
+						
 						if(!endRange){
 							endRange = tmpEndRange;
 						}else{
@@ -235,16 +242,19 @@
 					}
 					//修改头部被截断的节点
 					if( !startOpt && (queryNode === oriOptArea.firstNode || startCome) ){
-                        if(changeType === 'style'){
-                            startRange = this._addSpan(queryNode,oriOptArea,styleType,styleValue,'first');
-						}else if(changeType === 'wordcase'){
-	                        startRange = this._wordCase(queryNode,oriOptArea,styleType,styleValue,'first');
-                        }else if(changeType === 'tag_on'){
-                            startRange = this._addTag(queryNode,oriOptArea,styleType,'first','on');
-                        }else{
-							startRange = this._addTag(queryNode,oriOptArea,styleType,'first','off');
+						if(!startCome){
+							 if(changeType === 'style'){
+								startRange = this._addSpan(queryNode,oriOptArea,styleType,styleValue,'first');
+							}else if(changeType === 'wordcase'){
+								startRange = this._wordCase(queryNode,oriOptArea,styleType,styleValue,'first');
+							}else if(changeType === 'tag_on'){
+								startRange = this._addTag(queryNode,oriOptArea,styleType,'first','on');
+							}else{
+								startRange = this._addTag(queryNode,oriOptArea,styleType,'first','off');
+							}
 						}
                         startOpt = 1;
+						tmpEndRange = startRange;
 						if(startRange && queryNode.nodeType !== 3){
 							startEmpty = 1;
 						}
